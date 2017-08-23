@@ -2,12 +2,15 @@
 Bonjour !
 
 
-<ul>
+</head>
+<table border collapse> 
+	<thead><th>nom</th></thead>
+	<tbody> 
 <#list objets as obj>
-<li>${obj.nom}</li>
+<tr align=center><td>${obj.nom}</td></tr>
 </#list>
-</ul>
-
+</tbody>
+</table>
 
 
 </html>
