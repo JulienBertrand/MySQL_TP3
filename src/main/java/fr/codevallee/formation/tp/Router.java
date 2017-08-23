@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import fr.codevallee.formation.tp.modele.Demo;
 import freemarker.template.Configuration;
@@ -25,7 +26,6 @@ public class Router implements SparkApplication {
 
 		final Logger logger = LoggerFactory.getLogger(Router.class);
 
-		
 		get("/exemple1", (request, response) -> {
 
 			logger.debug("start");
@@ -43,6 +43,10 @@ public class Router implements SparkApplication {
 			entityManager.getTransaction().begin();
 			entityManager.persist(metier);
 			entityManager.getTransaction().commit();
+
+			TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+			attributes.put("objets", query.getResultList());
+
 			entityManager.close();
 
 			return new ModelAndView(attributes, "home.ftl");
