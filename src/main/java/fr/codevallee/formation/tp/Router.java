@@ -3,8 +3,15 @@ package fr.codevallee.formation.tp;
 import static spark.Spark.get;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import fr.codevallee.formation.tp.modele.Demo;
 import freemarker.template.Configuration;
 import freemarker.template.Version;
 import spark.ModelAndView;
@@ -14,43 +21,95 @@ import spark.template.freemarker.FreeMarkerEngine;
 public class Router implements SparkApplication {
 
 	public void init() {
-		
-		get("/modifier.modis", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			return new ModelAndView(attributes, "modifier.ftl");
-		}, getFreeMarkerEngine());
-		
-		get("/ajouter.modis", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			return new ModelAndView(attributes, "modifier.ftl");
-		}, getFreeMarkerEngine());
-		
-		get("/modifier.modis", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			return new ModelAndView(attributes, "modifier.ftl");
-		}, getFreeMarkerEngine());
-		
-		
-		
-		
-		
+		Map<String, Object> attributes = new HashMap<>();
 
-		get("/resultat.modis", (request, response) -> {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+		attributes.put("objets", query.getResultList());
+
+		get("/home", (request, response) -> {
+			  List<Demo> demo = query.getResultList();
+//				  attributes.put("objets", query.getResultList());
+			//Demo demo = entityManager.getReference(Demo.class, 1); 
+			attributes.put("objets", demo);
+				  
+			return new ModelAndView(attributes, "home.ftl");
+		}, getFreeMarkerEngine());
+
+//		get("/resultat_lecture", (request, response) -> {
+//
+//			Demo demoModifier = entityManager.find(Demo.class, 1);
+//			attributes.put("Demo_HTML", demoModifier);
+//			return new ModelAndView(attributes, "resultat_lecture.ftl");
+//		}, getFreeMarkerEngine());
+		
+//		TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+//		 attributes.put("objets", query.getResultList());
+		
+		get("/ajouter", (request, response) -> {
+			return new ModelAndView(attributes, "ajouter.ftl");
+		}, getFreeMarkerEngine());
+		//
+		// get("/modifier", (request, response) -> {
+		//
+		// return new ModelAndView(attributes, "ajouter.ftl");
+		// }, getFreeMarkerEngine());
+		//
+
+		//
+
+		get("/resultat_ajouter", (request, response) -> {
 			String nom = request.queryParams("nom");
 			String prenom = request.queryParams("prenom");
 			String civilite = request.queryParams("civilite");
-			Map<String, Object> attributes = new HashMap<>();
+
 			attributes.put("nom", nom);
 			attributes.put("prenom", prenom);
 			attributes.put("civilite", civilite);
-			return new ModelAndView(attributes, "resultat.ftl");
-}, getFreeMarkerEngine());
-		
-		
-		
-		
-		
 
+			Demo demoModifier = new Demo();
+			demoModifier.setCivilite(civilite);
+			demoModifier.setNom(nom);
+			demoModifier.setPrenom(prenom);
+
+			entityManager.getTransaction().begin();
+			entityManager.persist(demoModifier);
+			entityManager.getTransaction().commit();
+			// entityManager.close();
+
+			return new ModelAndView(attributes, "resultat_ajouter.ftl");
+
+		}, getFreeMarkerEngine());
+
+		get("/supprimer", (request, response) -> {
+
+			return new ModelAndView(attributes, "supprimer.ftl");
+		}, getFreeMarkerEngine());
+
+		get("/resultat_supprimer", (request, response) -> {
+			String nom = request.queryParams("nom");
+			String prenom = request.queryParams("prenom");
+			String civilite = request.queryParams("civilite");
+
+			attributes.put("nom", nom);
+			attributes.put("prenom", prenom);
+			attributes.put("civilite", civilite);
+
+			Demo demoModifier = new Demo();
+			demoModifier.setCivilite(civilite);
+			demoModifier.setNom(nom);
+			demoModifier.setPrenom(prenom);
+
+			entityManager.getTransaction().begin();
+			entityManager.remove(demoModifier);
+			entityManager.getTransaction().commit();
+			// entityManager.close();
+
+			return new ModelAndView(attributes, "resultat_supprimer.ftl");
+
+		}, getFreeMarkerEngine());
 
 	}
 
@@ -65,34 +124,33 @@ public class Router implements SparkApplication {
 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////// ::
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////::
-
-
-//final Logger logger = LoggerFactory.getLogger(Router.class);
+// final Logger logger = LoggerFactory.getLogger(Router.class);
 //
-//get("/exemple1", (request, response) -> {
+// get("/exemple1", (request, response) -> {
 //
-//	logger.debug("start");
+// logger.debug("start");
 //
-//	Map<String, Object> attributes = new HashMap<>();
+// Map<String, Object> attributes = new HashMap<>();
 //
-//	// Exemple 1 (à déplacer dans une classe statique !):
-//	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
-//	EntityManager entityManager = entityManagerFactory.createEntityManager();
+// // Exemple 1 (à déplacer dans une classe statique !):
+// EntityManagerFactory entityManagerFactory =
+// Persistence.createEntityManagerFactory("formation");
+// EntityManager entityManager = entityManagerFactory.createEntityManager();
 //
-//	// J'ajoute un métier :
-//	Demo metier = new Demo();
-//	metier.setNom("exemple1");
+// // J'ajoute un métier :
+// Demo metier = new Demo();
+// metier.setNom("exemple1");
 //
-//	entityManager.getTransaction().begin();
-//	entityManager.persist(metier);
-//	entityManager.getTransaction().commit();
+// entityManager.getTransaction().begin();
+// entityManager.persist(metier);
+// entityManager.getTransaction().commit();
 //
-//	TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-//	attributes.put("objets", query.getResultList());
+// TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+// attributes.put("objets", query.getResultList());
 //
-//	entityManager.close();
+// entityManager.close();
 //
-//	return new ModelAndView(attributes, "home.ftl");
-//}, getFreeMarkerEngine());
+// return new ModelAndView(attributes, "home.ftl");
+// }, getFreeMarkerEngine());

@@ -1,6 +1,6 @@
 <html>
 
-	<form action="/resultat" method="get">
+	<form action="/resultat_modifier" method="get">
 	
 		<select name="civilite">
 		  <option value="Mr">Mr</option>
