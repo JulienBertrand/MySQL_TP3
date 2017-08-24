@@ -7,15 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "demo")
+@Table(name = "demo_HTML")
 
 public class Demo {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-
 	private String nom;
+	private String civilite;
+
+	/**
+	 * @return the civilite
+	 */
+	public String getCivilite() {
+		return civilite;
+	}
 
 	public String getNom() {
 		return nom;
