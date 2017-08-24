@@ -3,7 +3,6 @@ package fr.codevallee.formation.tp;
 import static spark.Spark.get;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -30,9 +29,9 @@ public class Router implements SparkApplication {
 		attributes.put("objets", query.getResultList());
 
 		get("/home", (request, response) -> {
-			  List<Demo> demo = query.getResultList();
+			  //List<Demo> demo = query.getResultList();
 //				  attributes.put("objets", query.getResultList());
-			//Demo demo = entityManager.getReference(Demo.class, 1); 
+			Demo demo = entityManager.find(Demo.class, 1); 
 			attributes.put("objets", demo);
 				  
 			return new ModelAndView(attributes, "home.ftl");
