@@ -1,5 +1,7 @@
 <html>
 
+Personne  ajoutée:
+
 	Nom : ${nom}	
 	<br>
 	

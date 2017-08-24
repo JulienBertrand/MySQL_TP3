@@ -20,46 +20,33 @@ import spark.template.freemarker.FreeMarkerEngine;
 public class Router implements SparkApplication {
 
 	public void init() {
-		Map<String, Object> attributes = new HashMap<>();
 
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		// Affichage de la table
+		get("/afficher", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
 
-		TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-		attributes.put("objets", query.getResultList());
+			// System.out.println(query.getResultList());
+			for (Demo i : query.getResultList()) {
+				System.out.println(i.getNom());
+			}
+			attributes.put("objets", query.getResultList());
 
-		get("/home", (request, response) -> {
-			  //List<Demo> demo = query.getResultList();
-//				  attributes.put("objets", query.getResultList());
-			Demo demo = entityManager.find(Demo.class, 1); 
-			attributes.put("objets", demo);
-				  
 			return new ModelAndView(attributes, "home.ftl");
 		}, getFreeMarkerEngine());
 
-//		get("/resultat_lecture", (request, response) -> {
-//
-//			Demo demoModifier = entityManager.find(Demo.class, 1);
-//			attributes.put("Demo_HTML", demoModifier);
-//			return new ModelAndView(attributes, "resultat_lecture.ftl");
-//		}, getFreeMarkerEngine());
-		
-//		TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-//		 attributes.put("objets", query.getResultList());
-		
+		// Ajouter une ligne
 		get("/ajouter", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
 			return new ModelAndView(attributes, "ajouter.ftl");
 		}, getFreeMarkerEngine());
-		//
-		// get("/modifier", (request, response) -> {
-		//
-		// return new ModelAndView(attributes, "ajouter.ftl");
-		// }, getFreeMarkerEngine());
-		//
-
-		//
 
 		get("/resultat_ajouter", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
 			String nom = request.queryParams("nom");
 			String prenom = request.queryParams("prenom");
 			String civilite = request.queryParams("civilite");
@@ -82,34 +69,49 @@ public class Router implements SparkApplication {
 
 		}, getFreeMarkerEngine());
 
+		// Suppression d'une ligne
+
 		get("/supprimer", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+
+			// System.out.println(query.getResultList());
+			for (Demo i : query.getResultList()) {
+				System.out.println(i.getNom());
+			}
+			attributes.put("objets", query.getResultList());
 
 			return new ModelAndView(attributes, "supprimer.ftl");
 		}, getFreeMarkerEngine());
 
 		get("/resultat_supprimer", (request, response) -> {
-			String nom = request.queryParams("nom");
-			String prenom = request.queryParams("prenom");
-			String civilite = request.queryParams("civilite");
+			Map<String, Object> attributes = new HashMap<>();
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-			attributes.put("nom", nom);
-			attributes.put("prenom", prenom);
-			attributes.put("civilite", civilite);
+			Demo demoUser = entityManager.find(Demo.class, Integer.parseInt(request.params(":id")));
 
-			Demo demoModifier = new Demo();
-			demoModifier.setCivilite(civilite);
-			demoModifier.setNom(nom);
-			demoModifier.setPrenom(prenom);
+			attributes.put("utilisateur", demoUser);
 
 			entityManager.getTransaction().begin();
-			entityManager.remove(demoModifier);
+			entityManager.remove(demoUser);
 			entityManager.getTransaction().commit();
 			// entityManager.close();
 
 			return new ModelAndView(attributes, "resultat_supprimer.ftl");
 
 		}, getFreeMarkerEngine());
+		Map<String, Object> attributes = new HashMap<>();
+		get("/Maire", (request, response) -> {
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			Maire maire = new Maire();
 
+			return new ModelAndView(attributes, "resultat_supprimer.ftl");
+
+		}, getFreeMarkerEngine());
 	}
 
 	private FreeMarkerEngine getFreeMarkerEngine() {

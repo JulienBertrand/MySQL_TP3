@@ -16,4 +16,32 @@ private Long id;
 private String nom ;
 @OneToOne
 private Maire maire ;
+
+
+
+
+/**
+ * @return the nom
+ */
+public String getNom() {
+	return nom;
+}
+/**
+ * @param nom the nom to set
+ */
+public void setNom(String nom) {
+	this.nom = nom;
+}
+/**
+ * @return the maire
+ */
+public Maire getMaire() {
+	return maire;
+}
+/**
+ * @param maire the maire to set
+ */
+public void setMaire(Maire maire) {
+	this.maire = maire;
+}
 }

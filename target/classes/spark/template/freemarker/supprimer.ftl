@@ -2,18 +2,19 @@
 
 	<form action="/resultat_supprimer" method="get">
 	
-		<select name="civilite">
-		  <option value="Mr">Mr</option>
-		  <option value="Mme">Mme</option>
-		  <option value="Mlle">Mlle</option>
-		  <option value="-">-</option>
-		</select>
+	</head>
+<table border collapse> 
+	<thead><th>nom</th></thead>
+	<tbody> 
+<#list objets as obj>
+<tr align=center><td>${obj.civilite}</td><td>${obj.nom}</td><td>${obj.prenom}</td></tr>
+</#list>
+</tbody>
+</table>	
 	
-		Nom : <input type="text" name="nom">	
+		Id : <input type="text" name="Id">	
 		<br>
 		
-		Prenom : <input type="text" name="prenom">	
-		<br>
 		
 		<button type="submit">Valider !</button>
 			
