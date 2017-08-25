@@ -103,8 +103,14 @@ public class Router implements SparkApplication {
 			return new ModelAndView(attributes, "resultat_supprimer.ftl");
 
 		}, getFreeMarkerEngine());
-		Map<String, Object> attributes = new HashMap<>();
+		
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////:		
+//TP5 "Maires"
+		
+		
 		get("/Maire", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 			Maire maire = new Maire();
