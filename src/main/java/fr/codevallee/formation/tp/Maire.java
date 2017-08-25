@@ -15,7 +15,7 @@ public class Maire {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private int id;
 
 	@Column(length = 40)
 	private String nom;

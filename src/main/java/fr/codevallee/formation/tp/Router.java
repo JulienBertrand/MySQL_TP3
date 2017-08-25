@@ -24,6 +24,9 @@ public class Router implements SparkApplication {
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :
 		// TP5 "Maires"
 
+//Ajouter		
+		
+		
 		get("/ajouter", (request, response) -> {
 			Map<String, Object> attributes = new HashMap<>();
 			return new ModelAndView(attributes, "ajouter.ftl");
@@ -46,49 +49,99 @@ public class Router implements SparkApplication {
 			// maire3.setNom("Paul");
 			// maire4.setNom("Louis");
 
-//			Elu elu = new Elu();
-//			Elu elu2 = new Elu();
-//			Elu elu3 = new Elu();
-//			Elu elu4 = new Elu();
-//			elu.setNom("Paul");
-//			elu2.setNom("Kevin");
-//			elu3.setNom("Luigi");
-//			elu4.setNom("Han");
+			// Elu elu = new Elu();
+			// Elu elu2 = new Elu();
+			// Elu elu3 = new Elu();
+			// Elu elu4 = new Elu();
+			// elu.setNom("Paul");
+			// elu2.setNom("Kevin");
+			// elu3.setNom("Luigi");
+			// elu4.setNom("Han");
 
-//			entityManager.getTransaction().begin();
-//			// entityManager.persist(maire);
-//			// entityManager.persist(maire2);
-//			// entityManager.persist(maire3);
-//			// entityManager.persist(maire4);
-//			entityManager.persist(elu);
-//			entityManager.persist(elu2);
-//			entityManager.persist(elu3);
-//			entityManager.persist(elu4);
-//			entityManager.getTransaction().commit();
+			// entityManager.getTransaction().begin();
+			// // entityManager.persist(maire);
+			// // entityManager.persist(maire2);
+			// // entityManager.persist(maire3);
+			// // entityManager.persist(maire4);
+			// entityManager.persist(elu);
+			// entityManager.persist(elu2);
+			// entityManager.persist(elu3);
+			// entityManager.persist(elu4);
+			// entityManager.getTransaction().commit();
 
-			
-				Commune commune = new Commune();
-				commune.setNom(nomCommune);
+			Commune commune = new Commune();
+			commune.setNom(nomCommune);
 
-				Maire maire = new Maire();
-				maire.setNom(nomMaire);
+			Maire maire = new Maire();
+			maire.setNom(nomMaire);
 
-				maire.setCommune(commune);
-				commune.setMaire(maire);
-				entityManager.getTransaction().begin();
-				entityManager.persist(maire);
-				entityManager.persist(commune);
-				entityManager.getTransaction().commit();
+			//maire.setCommune(commune);
+			commune.setMaire(maire);
+			entityManager.getTransaction().begin();
+			entityManager.persist(maire);
+			entityManager.persist(commune);
+			entityManager.getTransaction().commit();
 
-			
-//			TypedQuery<Maire> query = entityManager.createQuery("from Maire", Maire.class);
-//			query.getResultList();
-//			attributes.put("objets", query.getResultList());
-//			for (Maire m : query.getResultList()) {
-//				System.out.println(m.getNom() + ";" + m.getCommune());
-//			}
+			// TypedQuery<Maire> query = entityManager.createQuery("from Maire",
+			// Maire.class);
+			// query.getResultList();
+			// attributes.put("objets", query.getResultList());
+			// for (Maire m : query.getResultList()) {
+			// System.out.println(m.getNom() + ";" + m.getCommune());
+			// }
 
 			return new ModelAndView(attributes, "/resultat_ajouter.ftl");
+
+		}, getFreeMarkerEngine());
+		
+		
+		
+//Supprimer
+		
+		
+		get("/supprimer", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			return new ModelAndView(attributes, "supprimer.ftl");
+		}, getFreeMarkerEngine());
+
+		get("/resultat_supprimer", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			int idCommune = Integer.parseInt(request.queryParams("idcommune"));
+			
+
+			Commune communeSuppr = entityManager.find(Commune.class, idCommune);
+			
+			entityManager.getTransaction().begin();
+			entityManager.remove(communeSuppr);
+			entityManager.getTransaction().commit();
+			//attributes.put("commune_supprimee", communeSuppr);
+			return new ModelAndView(attributes, "/resultat_supprimer.ftl");
+			
+		}, getFreeMarkerEngine());
+		
+//modifier
+		
+		get("/modifier", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			return new ModelAndView(attributes, "modifier.ftl");
+		}, getFreeMarkerEngine());
+
+		get("/resultat_modifier", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			int idCommune = Integer.parseInt(request.queryParams("idcommune"));
+			//int idMaire = Integer.parseInt(request.queryParams("idmaire"));
+System.out.println(idCommune);
+			Commune communeMaj = entityManager.find(Commune.class, idCommune);
+			//Maire maireMaj = entityManager.find(Maire.class, idMaire);
+			entityManager.getTransaction().begin();
+			communeMaj.setNom("FGFGF");
+			entityManager.getTransaction().commit();
+
+			return new ModelAndView(attributes, "/resultat_modifier.ftl");
 
 		}, getFreeMarkerEngine());
 	}

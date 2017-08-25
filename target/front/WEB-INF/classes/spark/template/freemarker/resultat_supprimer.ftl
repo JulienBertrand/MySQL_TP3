@@ -1,12 +1,10 @@
 <html>
 
-	Nom : ${nom}	
+
+	<br>
+	Commune supprimée
 	<br>
 	
-	Prenom : ${prenom}	
-	<br>
-	
-	Civilite : ${civilite}
 	
 
 </html>

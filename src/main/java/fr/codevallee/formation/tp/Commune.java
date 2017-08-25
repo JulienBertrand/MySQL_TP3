@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 public class Commune {
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
-private Long id;
+private int id;
 @Column(length=40)
 private String nom ;
 
