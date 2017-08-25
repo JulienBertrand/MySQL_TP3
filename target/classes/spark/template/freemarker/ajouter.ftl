@@ -2,17 +2,12 @@
 
 	<form action="/resultat_ajouter" method="get">
 	
-		<select name="civilite">
-		  <option value="Mr">Mr</option>
-		  <option value="Mme">Mme</option>
-		  <option value="Mlle">Mlle</option>
-		  <option value="-">-</option>
-		</select>
+		<select name="nomcommune">
+		 <select name="nommaire">
 	
-		Nom : <input type="text" name="nom">	
+		Nom de la commune : <input type="text" name="nomcommune">	
 		<br>
-		
-		Prenom : <input type="text" name="prenom">	
+		Nom du Maire : <input type="text" name="nommaire">	
 		<br>
 		
 		<button type="submit">Valider !</button>

@@ -1,14 +1,12 @@
 <html>
 
-Personne  ajoutée:
-
-	Nom : ${nom}	
+Maire ajouté et commune:
+<br>
+	nom de la Commune : ${nomcommune}	
+	<br>
+	nom du Maire : ${nommaire}	
 	<br>
 	
-	Prenom : ${prenom}	
-	<br>
-	
-	Civilite : ${civilite}
 	
 
 </html>

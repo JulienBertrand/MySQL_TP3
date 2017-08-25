@@ -21,23 +21,9 @@ public class Router implements SparkApplication {
 
 	public void init() {
 
-		// Affichage de la table
-		get("/afficher", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
-			TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :
+		// TP5 "Maires"
 
-			// System.out.println(query.getResultList());
-			for (Demo i : query.getResultList()) {
-				System.out.println(i.getNom());
-			}
-			attributes.put("objets", query.getResultList());
-
-			return new ModelAndView(attributes, "home.ftl");
-		}, getFreeMarkerEngine());
-
-		// Ajouter une ligne
 		get("/ajouter", (request, response) -> {
 			Map<String, Object> attributes = new HashMap<>();
 			return new ModelAndView(attributes, "ajouter.ftl");
@@ -47,75 +33,62 @@ public class Router implements SparkApplication {
 			Map<String, Object> attributes = new HashMap<>();
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
-			String nom = request.queryParams("nom");
-			String prenom = request.queryParams("prenom");
-			String civilite = request.queryParams("civilite");
+			String nomCommune = request.queryParams("nomcommune");
+			String nomMaire = request.queryParams("nommaire");
+			attributes.put("nomcommune", nomCommune);
+			attributes.put("nommaire", nomMaire);
+			// Maire maire = new Maire();
+			// Maire maire2 = new Maire();
+			// Maire maire3 = new Maire();
+			// Maire maire4 = new Maire();
+			// maire.setNom("Jean");
+			// maire2.setNom("Jcques");
+			// maire3.setNom("Paul");
+			// maire4.setNom("Louis");
 
-			attributes.put("nom", nom);
-			attributes.put("prenom", prenom);
-			attributes.put("civilite", civilite);
+//			Elu elu = new Elu();
+//			Elu elu2 = new Elu();
+//			Elu elu3 = new Elu();
+//			Elu elu4 = new Elu();
+//			elu.setNom("Paul");
+//			elu2.setNom("Kevin");
+//			elu3.setNom("Luigi");
+//			elu4.setNom("Han");
 
-			Demo demoModifier = new Demo();
-			demoModifier.setCivilite(civilite);
-			demoModifier.setNom(nom);
-			demoModifier.setPrenom(prenom);
+//			entityManager.getTransaction().begin();
+//			// entityManager.persist(maire);
+//			// entityManager.persist(maire2);
+//			// entityManager.persist(maire3);
+//			// entityManager.persist(maire4);
+//			entityManager.persist(elu);
+//			entityManager.persist(elu2);
+//			entityManager.persist(elu3);
+//			entityManager.persist(elu4);
+//			entityManager.getTransaction().commit();
 
-			entityManager.getTransaction().begin();
-			entityManager.persist(demoModifier);
-			entityManager.getTransaction().commit();
-			// entityManager.close();
+			
+				Commune commune = new Commune();
+				commune.setNom(nomCommune);
 
-			return new ModelAndView(attributes, "resultat_ajouter.ftl");
+				Maire maire = new Maire();
+				maire.setNom(nomMaire);
 
-		}, getFreeMarkerEngine());
+				maire.setCommune(commune);
+				commune.setMaire(maire);
+				entityManager.getTransaction().begin();
+				entityManager.persist(maire);
+				entityManager.persist(commune);
+				entityManager.getTransaction().commit();
 
-		// Suppression d'une ligne
+			
+//			TypedQuery<Maire> query = entityManager.createQuery("from Maire", Maire.class);
+//			query.getResultList();
+//			attributes.put("objets", query.getResultList());
+//			for (Maire m : query.getResultList()) {
+//				System.out.println(m.getNom() + ";" + m.getCommune());
+//			}
 
-		get("/supprimer", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
-			TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-
-			// System.out.println(query.getResultList());
-			for (Demo i : query.getResultList()) {
-				System.out.println(i.getNom());
-			}
-			attributes.put("objets", query.getResultList());
-
-			return new ModelAndView(attributes, "supprimer.ftl");
-		}, getFreeMarkerEngine());
-
-		get("/resultat_supprimer", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-			Demo demoUser = entityManager.find(Demo.class, Integer.parseInt(request.params(":id")));
-
-			attributes.put("utilisateur", demoUser);
-
-			entityManager.getTransaction().begin();
-			entityManager.remove(demoUser);
-			entityManager.getTransaction().commit();
-			// entityManager.close();
-
-			return new ModelAndView(attributes, "resultat_supprimer.ftl");
-
-		}, getFreeMarkerEngine());
-		
-		
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////:		
-//TP5 "Maires"
-		
-		
-		get("/Maire", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
-			Maire maire = new Maire();
-
-			return new ModelAndView(attributes, "resultat_supprimer.ftl");
+			return new ModelAndView(attributes, "/resultat_ajouter.ftl");
 
 		}, getFreeMarkerEngine());
 	}
