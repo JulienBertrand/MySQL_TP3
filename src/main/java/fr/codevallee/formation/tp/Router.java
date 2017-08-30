@@ -36,6 +36,7 @@ public class Router implements SparkApplication {
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 
+			
 			// création d'une description
 			ArticleDescription articleDescription1 = new ArticleDescription("trousse de crayons de couleur");
 			ArticleDescription articleDescription2 = new ArticleDescription("ardoise margique");
