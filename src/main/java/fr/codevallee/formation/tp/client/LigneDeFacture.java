@@ -7,17 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-//@Table(name = "ligne de Facture")
+// @Table(name = "ligne de Facture")
 public class LigneDeFacture {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id_Ligne;
-	
+
 	@OneToOne
 	private Article article;
 	private int nombreArticle;
-	//private Facture facture;
+	// private Facture facture;
 
 	double totalLigneFacture() {
 		return nombreArticle * article.getPrixArticle();
@@ -35,11 +35,11 @@ public class LigneDeFacture {
 	 * @param nombreArticle
 	 * @param facture
 	 */
-	public LigneDeFacture(Article article, int nombreArticle) { //Facture facture) {
+	public LigneDeFacture(Article article, int nombreArticle) { // Facture facture) {
 		super();
 		this.article = article;
 		this.nombreArticle = nombreArticle;
-		//this.facture = facture;
+		// this.facture = facture;
 	}
 
 	//////////////////////////////////////////////////////////////////
@@ -76,15 +76,15 @@ public class LigneDeFacture {
 	/**
 	 * @return the facture
 	 */
-//	public Facture getFacture() {
-//		return facture;
-//	}
-//
-//	/**
-//	 * @param facture the facture to set
-//	 */
-//	public void setFacture(Facture facture) {
-//		this.facture = facture;
-//	}
+	// public Facture getFacture() {
+	// return facture;
+	// }
+	//
+	// /**
+	// * @param facture the facture to set
+	// */
+	// public void setFacture(Facture facture) {
+	// this.facture = facture;
+	// }
 
 }

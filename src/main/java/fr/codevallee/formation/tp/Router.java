@@ -36,7 +36,6 @@ public class Router implements SparkApplication {
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-			
 			// création d'une description
 			ArticleDescription articleDescription1 = new ArticleDescription("trousse de crayons de couleur");
 			ArticleDescription articleDescription2 = new ArticleDescription("ardoise margique");
@@ -194,12 +193,12 @@ public class Router implements SparkApplication {
 			afficherArticle(entityManager, 7);
 			afficherArticle(entityManager, 8);
 
-			// Affichage des descriptions d'articles
-			System.out.println("voici la liste des descriptions d'articles" + "\n");
-			afficherArticleDescription(entityManager, 1);
-			afficherArticleDescription(entityManager, 2);
-			afficherArticleDescription(entityManager, 3);
-			afficherArticleDescription(entityManager, 4);
+			// // Affichage des descriptions d'articles
+//			 System.out.println("voici la liste des descriptions d'articles" + "\n");
+//			 afficherArticleDescription(entityManager, 1);
+//			 afficherArticleDescription(entityManager, 2);
+//			 afficherArticleDescription(entityManager, 3);
+//			 afficherArticleDescription(entityManager, 4);
 
 			return new ModelAndView(attributes, "home.ftl");
 		}, getFreeMarkerEngine());
@@ -232,10 +231,11 @@ public class Router implements SparkApplication {
 
 	}
 
-	static void afficherArticleDescription(EntityManager entityManager, int i) {
-		// TODO Auto-generated method stub
-		System.out.println("Description de l'article " + entityManager.find(ArticleDescription.class, i));
-	}
+//	 static void afficherArticleDescription(EntityManager entityManager, int i) {
+//	 // TODO Auto-generated method stub
+//	 System.out.println("Description de l'article " +
+//	 entityManager.find(ArticleDescription.class, i));
+//	 }
 
 	private FreeMarkerEngine getFreeMarkerEngine() {
 		FreeMarkerEngine engine = new FreeMarkerEngine();

@@ -5,8 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
-
 @Entity
 public class Adresse {
 	@Id
@@ -16,14 +14,11 @@ public class Adresse {
 	private String nomDeRue;
 	private int codePostal;
 	private String ville;
-	
-	
-	
-	public Adresse() {
-		//super();
-	}	
 
-	
+	public Adresse() {
+		// super();
+	}
+
 	/**
 	 * @param numeroDeRue
 	 * @param nomDeRue
@@ -33,10 +28,9 @@ public class Adresse {
 		super();
 		this.numeroDeRue = numeroDeRue;
 		this.nomDeRue = nomDeRue;
-		this.codePostal= codePostal;
+		this.codePostal = codePostal;
 		this.ville = ville;
 	}
-
 
 	/**
 	 * @return the numeroDeRue
@@ -44,32 +38,40 @@ public class Adresse {
 	public int getNumeroDeRue() {
 		return numeroDeRue;
 	}
+
 	/**
-	 * @param numeroDeRue the numeroDeRue to set
+	 * @param numeroDeRue
+	 *            the numeroDeRue to set
 	 */
 	public void setNumeroDeRue(int numeroDeRue) {
 		this.numeroDeRue = numeroDeRue;
 	}
+
 	/**
 	 * @return the nomDeRue
 	 */
 	public String getNomDeRue() {
 		return nomDeRue;
 	}
+
 	/**
-	 * @param nomDeRue the nomDeRue to set
+	 * @param nomDeRue
+	 *            the nomDeRue to set
 	 */
 	public void setNomDeRue(String nomDeRue) {
 		this.nomDeRue = nomDeRue;
 	}
+
 	/**
 	 * @return the ville
 	 */
 	public String getVille() {
 		return ville;
 	}
+
 	/**
-	 * @param ville the ville to set
+	 * @param ville
+	 *            the ville to set
 	 */
 	public void setVille(String ville) {
 		this.ville = ville;
@@ -82,9 +84,9 @@ public class Adresse {
 		return codePostal;
 	}
 
-
 	/**
-	 * @param codePostal the codePostal to set
+	 * @param codePostal
+	 *            the codePostal to set
 	 */
 	public void setCodePostal(int codePostal) {
 		this.codePostal = codePostal;
